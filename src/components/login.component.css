@@ -1,0 +1,25 @@
+.LoginForm {
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin: auto;
+    margin-top: 15vh;
+    /* margin-left: 5vw;
+    margin-right: 5vw; */
+    max-width: 450px;
+}
+
+.LoginForm-form {
+    margin-top: 15vh;
+    background-color: #fcfcfc;
+    padding: 25px;
+    border-radius: 3%;
+    opacity: 0.975;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+.LoginForm-title {
+    text-align: center;
+    text-transform: uppercase;
+    color: #fcfcfc;
+}
