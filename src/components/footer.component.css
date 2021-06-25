@@ -1,0 +1,15 @@
+footer {
+    bottom:0;
+    width:100%;
+    background:#212529;
+    color: #fcfcfc;
+  }
+  
+  footer a {
+    text-decoration: none;
+  }
+  
+  footer span {
+    color: #fcfcfc;
+    border-bottom: 1px solid #fcfcfc;
+  }

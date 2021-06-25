@@ -1,0 +1,28 @@
+.Dashboard {
+    text-align: left;
+    min-height: 100vh;
+}
+
+.Dashboard-welcome {
+    color: #fcfcfc;
+}
+
+.Dashboard-content {
+    background-color: #fcfcfc;
+}
+
+.card {
+    background-color: #fcfcfc;
+}
+
+.card-header {
+    background-color: #fcfcfc;
+}
+
+.card-body {
+    text-align: left;
+}
+
+.Dashboard-news-item {
+    border-bottom: solid 1px #0072b8;
+}
