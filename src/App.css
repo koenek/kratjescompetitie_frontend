@@ -1,14 +1,8 @@
 .App {
+  padding-top: 15vh;
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
-  position: absolute;
-}
-
-.navbar {
-  height: 7vh;
-  max-width: 100vw;
+  background-color: #0072b8;
 }
 
 .bar {
@@ -28,5 +22,10 @@
 }
 
 .black {
-  background-color: #000000;
+  background-color: #212529;
 }
+
+.navbar {
+  background-color: #212529;
+}
+

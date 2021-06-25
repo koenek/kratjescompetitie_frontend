@@ -1,16 +1,12 @@
 .LoginForm {
-    position: absolute;
+    margin-top: 20vh;
     left: 0; 
     right: 0; 
-    margin: auto;
-    margin-top: 15vh;
-    /* margin-left: 5vw;
-    margin-right: 5vw; */
     max-width: 450px;
+    min-height: 100vh;
 }
 
 .LoginForm-form {
-    margin-top: 15vh;
     background-color: #fcfcfc;
     padding: 25px;
     border-radius: 3%;
@@ -23,3 +19,4 @@
     text-transform: uppercase;
     color: #fcfcfc;
 }
+
