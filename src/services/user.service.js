@@ -7,7 +7,6 @@ class UserService {
   async getUserData(id, token) {
     let userData = undefined;
     try {
-      console.log(API_URL + id);
       return await axios
       .get(API_URL + id, {
         headers: { Authorization: `Bearer ${token}` }
@@ -22,6 +21,30 @@ class UserService {
       console.log(err);
     }
     return userData;
+  }
+
+  async updateUserData(id, token, newUsername, newPassword) {
+    try {
+      return await axios
+      .put(API_URL + id, {
+        Authorization: `Bearer ${token}`,
+        username: (newUsername) ? newUsername : null,
+        password: (newPassword) ? newPassword : null
+      }, {
+        headers: { Authorization: `Bearer ${token}` },
+        body   : {
+          "username": (newUsername) ? newUsername : null,
+          "password": (newPassword) ? newPassword : null
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          return response;
+        }
+      })
+    } catch(err) {
+      return err.response;
+    }
   }
 
   getPublicContent() {

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import PlayerList from "./playerList.component";
+
 import AuthService from "../services/auth.service";
-import UserService from "../services/user.service";
+import TeamService from "../services/team.service";
+
 import "./team.component.css";
 
 class TeamPage extends Component {
@@ -8,28 +11,40 @@ class TeamPage extends Component {
     super(props);
 
     const user = AuthService.getCurrentUser();
-    
+
     this.state = {
       currentUser: user,
-      userData: '',
-      userStats: '',
+      teamData: '',
+      players: '',
       isLoading: true
     };
   }
 
   componentDidMount() {
+    console.log(this.props.teamId);
     const that = this;
-    UserService.getUserData(this.state.currentUser.id, this.state.currentUser.accessToken).then(function (result) {
+    TeamService.getTeamData(this.props.teamId, this.state.currentUser.accessToken).then(function (result) {
       console.log(result);
       that.setState(st => ({
-        userData: result,
-        userStats: result.statistics.statistics
+        teamData: result,
+        players: result.teamMembers,
+        isLoading: false
       }));
     });
   }
 
   render() {
-   return <h1>Team Page</h1>
+    const { teamData, players, isLoading } = this.state;
+    console.log(players);
+    return (
+      <div className="TeamPage mt-5">
+      {isLoading ? (
+        <h1>LOADING....</h1>
+      ) : (      
+        <PlayerList players={players} />
+      )}
+      </div>
+    )
   }
 }
 

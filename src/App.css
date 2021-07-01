@@ -2,7 +2,10 @@
   padding-top: 15vh;
   margin: 0;
   padding: 0;
-  background-color: #0072b8;
+  font-family: 'Ubuntu Condensed', sans-serif;
+  line-height: 1.35em;
+  letter-spacing: 0.15em;
+  /* background-color: #0072b8; */
 }
 
 .bar {

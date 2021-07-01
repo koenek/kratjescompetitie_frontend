@@ -14,6 +14,7 @@ class Profile extends Component {
 
   render() {
     const { currentUser } = this.state;
+    alert(currentUser);
     if (currentUser === null) {
       return <Redirect to="/login" />
     } else {

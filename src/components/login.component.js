@@ -10,7 +10,7 @@ const required = value => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        Dit veld mag niet leeg zijn
       </div>
     );
   }
@@ -60,12 +60,17 @@ class Login extends Component {
           window.location.reload();
         },
         error => {
-          const resMessage =
+          let resMessage =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
             error.toString();
+
+            if(error.response.status === 401)
+            {
+              resMessage = "Onjuiste gebruikersnaam en/of wachtwoord";
+            }
 
           this.setState({
             loading: false,
