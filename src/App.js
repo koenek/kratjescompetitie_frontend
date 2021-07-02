@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
+import UserService from "./services/user.service";
 
 import Navbar from "./components/navbar.component";
 import Footer from "./components/footer.component";
@@ -24,7 +25,10 @@ class App extends Component {
       showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
+      userData: undefined
     };
+
+    this.getData = this.getData.bind(this);
   }
 
   componentDidMount() {
@@ -36,12 +40,21 @@ class App extends Component {
         showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
+      this.getData(user);
     }
   }
 
-  render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+  getData(user) {
+    const that = this;
+    UserService.getUserData(user.id, user.accessToken).then(function (result) {
+      that.setState(st => ({
+        userData: result
+      }));
+    });
+  }
 
+  render() {
+    const { currentUser, userData } = this.state;
     return (
       <div className="App">
         
@@ -54,7 +67,7 @@ class App extends Component {
             <Redirect to="/login" />
           </Route>
           <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/team" component={TeamPage} />
+          <Route exact path="/team" render={() => (userData) ? <TeamPage teamId={userData.teamId}/> : this.getData }/>
           <Route exact path="/profile" component={Profile} />
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
