@@ -8,6 +8,19 @@
   /* background-color: #0072b8; */
 }
 
+.card {
+  background-color: #fcfcfc;
+  color: #212529;
+}
+
+.card-header {
+  background-color: #fcfcfc;
+}
+
+.card-body {
+  text-align: left;
+}
+
 .bar {
   float: left;
   width: 10vw;

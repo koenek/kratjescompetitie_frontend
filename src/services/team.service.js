@@ -17,9 +17,9 @@ class TeamService {
         }
       })
     } catch(err) {
-      console.log(err);
+      alert(err);
     }
-    return teamData;
+    return null;
   }
 }
 

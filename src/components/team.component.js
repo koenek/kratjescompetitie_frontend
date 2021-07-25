@@ -21,10 +21,8 @@ class TeamPage extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.teamId);
     const that = this;
     TeamService.getTeamData(this.props.teamId, this.state.currentUser.accessToken).then(function (result) {
-      console.log(result);
       that.setState(st => ({
         teamData: result,
         players: result.teamMembers,
@@ -35,14 +33,15 @@ class TeamPage extends Component {
 
   render() {
     const { teamData, players, isLoading } = this.state;
-    console.log(players);
     return (
       <div className="TeamPage mt-5">
-      {isLoading ? (
-        <h1>LOADING....</h1>
-      ) : (      
-        <PlayerList players={players} />
-      )}
+        <div className="container">
+          {isLoading ? (
+            <h1>LOADING....</h1>
+          ) : (
+            <PlayerList players={players} teamName={teamData.teamName} />
+          )}
+        </div>
       </div>
     )
   }

@@ -66,7 +66,6 @@ class Login extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
-
             if(error.response.status === 401)
             {
               resMessage = "Onjuiste gebruikersnaam en/of wachtwoord";
