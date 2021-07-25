@@ -1,0 +1,20 @@
+.ManagementBoard {
+    min-height: 100vh;
+}
+
+.tab-content {
+    color: #fcfcfc;
+}
+
+.nav-link {
+    color: #fcfcfc;
+}
+
+.nav-link:hover {
+    color: #0072b8;
+}
+
+.mega {
+    min-width: 100vw;
+    min-height: 100vh;
+}

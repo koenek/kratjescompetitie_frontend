@@ -13,7 +13,7 @@ class Navbar extends Component {
     }
 
     render() {
-        const { user } = this.props;
+        const { user, isAdmin, isMod } = this.props;
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <Link to={"/"} className="navbar-brand">
@@ -35,6 +35,13 @@ class Navbar extends Component {
                                     Team
                                 </Link>
                             </li>
+                            { (isAdmin || isMod) &&
+                                <li className="nav-item">
+                                    <Link to={"/beheer"} className="nav-link">
+                                        Beheer
+                                    </Link>
+                                </li>
+                            }
                             {/* <li className="nav-item">
           <Link to={"/profile"} className="nav-link">
             {user.username}

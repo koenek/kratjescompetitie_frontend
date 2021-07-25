@@ -1,0 +1,25 @@
+.list-group-item {
+    padding: 0.25em;
+}
+
+.PlayerEventData-text {
+    font-size: 0.80em;
+    text-align: center;
+}
+
+.PlayerEventData-number {
+    text-align: center;
+}
+
+.PlayerEventData-checkbox {
+    text-align: center;
+}
+
+.row {
+    padding-bottom: 0;
+}
+
+.PlayerEventDataList-title {
+    font-size: 0.80em;
+    text-align: center;
+}

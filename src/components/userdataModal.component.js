@@ -24,25 +24,26 @@ class UserDataModal extends Component {
 
     handleClick(e) {
         const { user } = this.props;
-        const { newUsername, oldPassword, newPassword, newPasswordConfirmation } = this.state;
+        const { newUsername, newPassword, newPasswordConfirmation } = this.state;
 
         this.setState({
             errorMsg: "",
             loading: true
         });
 
-        if(newPassword === "" && newUsername == "") {
+        if(newPassword === "" && newUsername === "") {
             this.setState({
                 errorMsg: "Je hebt geen gegevens ingevoerd",
                 loading: false
-            })
+            });
+            return;
         }
 
         if (newPassword !== newPasswordConfirmation) {
             this.setState({
                 loading: false,
                 errorMsg: "Wachtwoorden niet gelijk aan elkaar"
-            })
+            });
             return;
         }
 
@@ -52,12 +53,10 @@ class UserDataModal extends Component {
             , newUsername
             , newPassword).then(
                 (res) => {
-                    console.log(res.status);
                     if(res.status === 200) {
                         AuthService.logout();
                         window.location.reload();
                     } else {
-                        console.log(res);
                         this.setState({
                             loading: false,
                             errorMsg: res.data.message
@@ -97,7 +96,6 @@ class UserDataModal extends Component {
     }
 
     render() {
-        const { user } = this.props;
         return (
             <div className="UserDataModal">
                 <div className="d-grid gap-2 col-6 mx-auto pt-4">
