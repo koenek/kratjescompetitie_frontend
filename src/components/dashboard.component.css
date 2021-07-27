@@ -14,3 +14,11 @@
 .Dashboard-news-item {
     border-bottom: solid 1px #0072b8;
 }
+
+.beer-open {
+    color: red;
+}
+
+.beer-closed {
+    color: lightgreen;
+}
