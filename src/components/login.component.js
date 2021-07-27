@@ -53,6 +53,27 @@ class Login extends Component {
 
     this.form.validateAll();
 
+    //   EventService.postEventData(
+    //     this.props.teamData.id, event).then(
+    //         (res) => {
+    //             if (res.status === 201) {
+    //                 this.setState({
+    //                     successMsg: "Event opgeslagen."
+    //                 })
+    //                 window.location.reload();
+    //             } else {
+    //                 this.setState({
+    //                     loading: false,
+    //                     errorMsg: (res.data.message.length > 0) ? res.data.message : "Opslaan mislukt door onbekende fout. Probeer het nogmaals."
+    //                 });
+    //                 return;
+    //             }
+    //         })
+
+    // this.setState({
+    //     loading: false
+    // });
+
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         () => {
@@ -60,17 +81,21 @@ class Login extends Component {
           window.location.reload();
         },
         error => {
-          let resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-            if(error.response.status === 401)
-            {
+          console.log(error.Error);
+          let resMessage = "";
+          if (error.response === undefined) {
+            resMessage = "Kan geen contact maken met de server.\nEr is misschien iets mis met je internetverbinding. Probeer het nogmaals.\nNeem contact op met de eigenaar van deze website als dit probleem zich blijft voordoen.";
+          } else {
+            resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+            if (error.response.status === 401) {
               resMessage = "Onjuiste gebruikersnaam en/of wachtwoord";
             }
-
+          }
           this.setState({
             loading: false,
             message: resMessage

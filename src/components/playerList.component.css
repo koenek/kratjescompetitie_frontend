@@ -1,3 +1,11 @@
+.PlayerList-header-container {
+    opacity: 0.97;
+}
+
 .PlayerList-header-logo {
     max-width: 15vw;
+}
+
+h1 {
+    color: #212529;
 }

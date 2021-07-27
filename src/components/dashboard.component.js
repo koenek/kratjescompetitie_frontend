@@ -15,9 +15,10 @@ class Dashboard extends Component {
 
     this.state = {
       currentUser: user,
-      userData: '',
-      userStats: '',
-      isLoading: true
+      userData: "",
+      userStats: "",
+      isLoading: true,
+      formattedTally: ""
     };
   }
 
@@ -27,115 +28,199 @@ class Dashboard extends Component {
       UserService.getUserData(this.state.currentUser.id, this.state.currentUser.accessToken).then(function (result) {
         that.setState(st => ({
           userData: result,
-          userStats: result.statistics.statistics
+          userStats: result.statistics.statistics,
+          isLoading: false
         }));
       });
     }
-
   }
 
   render() {
-    const { currentUser, userData, userStats } = this.state;
-    return (
-      <div className="container py-3">
-        {currentUser ? (
-          <main className="Dashboard">
-            <div className="row">
-              <h1 className="Dashboard-welcome mt-5 mb-5">
-                Welkom {userData.username}
-              </h1>
-            </div>
-            <div className="row row-cols-1 row-cols-md-12 mt-3 mb-3 mr-1 ml-1 text-center">
-              <div className="card mb-4 rounded-3 shadow-sm">
-                <div className="card-header py-3">
-                  <h4 className="my-0 fw-normal">Nieuws</h4>
-                </div>
-                <div className="card-body">
-                  <div className="Dashboard-news-item">
-                    <div className="d-flex w-100 justify-content-between">
-                      <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                      <small>3 days ago</small>
-                    </div>
-                  </div>
-                  <div className="Dashboard-news-item">
-                    <div className="d-flex w-100 justify-content-between">
-                      <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                      <small>3 days ago</small>
-                    </div>
-                  </div><div className="Dashboard-news-item">
-                    <div className="d-flex w-100 justify-content-between">
-                      <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                      <small>3 days ago</small>
-                    </div>
-                  </div>
-                </div>
+    const { currentUser, userData, userStats, isLoading } = this.state;
+    if (isLoading) {
+      return (
+        <div className="spinner-border text-light" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      )
+    } else {
+      // userStats.TALLYCOUNT omzetten in streepjes
+      let formattedTallyString = "";
+      for (let i = 0; i < this.state.userStats.TALLYCOUNT; i++) {
+        formattedTallyString += "|";
+      }
+
+      let punishmentCount = 0;
+      let punishmentFulfilled = 0;
+      let punishmentUnfulfilled = 0;
+      let punishmentKey = 0;
+      punishmentCount = userData.punishments.length;
+      userData.punishments.forEach(p => {
+        if (p.satisfied) {
+          punishmentFulfilled++;
+        } else if (!p.satisfied) {
+          punishmentUnfulfilled++;
+        }
+      })
+      console.log(`Count: ${punishmentCount}\nFul: ${punishmentFulfilled}\nUnful: ${punishmentUnfulfilled}`)
+
+      return (
+        <div className="container py-3">
+          {currentUser ? (
+            <main className="Dashboard">
+              <div className="row">
+                <h1 className="Dashboard-welcome mt-5 mb-5">
+                  Welkom {userData.username}
+                </h1>
               </div>
-            </div>
-            <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
-              <div className="col">
+              {/* <div className="row row-cols-1 row-cols-md-12 mt-3 mb-3 mr-1 ml-1 text-center">
                 <div className="card mb-4 rounded-3 shadow-sm">
                   <div className="card-header py-3">
-                    <h4 className="my-0 fw-normal">Gegevens</h4>
+                    <h4 className="my-0 fw-normal">Nieuws</h4>
                   </div>
                   <div className="card-body">
-                    <ul className="list-unstyled mt-3">
-                      <div className="row">
-                        <div className="col">
-                          <li>Gebruikersnaam: </li>
-                        </div>
-                        <div className="col">
-                          {userData.username}
-                        </div>
+                    <div className="Dashboard-news-item">
+                      <div className="d-flex w-100 justify-content-between">
+                        <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                        <small>3 days ago</small>
                       </div>
-                      <div className="row">
-                        <div className="col">
-                          <li>Wachtwoord: </li>
-                        </div>
-                        <div className="col">
-                          ********
-                        </div>
+                    </div>
+                    <div className="Dashboard-news-item">
+                      <div className="d-flex w-100 justify-content-between">
+                        <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                        <small>3 days ago</small>
                       </div>
-                      <div className="row">
-                        <div className="col">
-                          <UserdataModal user={currentUser} />
-                        </div>
+                    </div><div className="Dashboard-news-item">
+                      <div className="d-flex w-100 justify-content-between">
+                        <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                        <small>3 days ago</small>
                       </div>
-                    </ul>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+              <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div className="col">
+                  <div className="card mb-4 rounded-3 shadow-sm">
+                    <div className="card-header py-3">
+                      <h4 className="my-0 fw-normal">Gegevens</h4>
+                    </div>
+                    <div className="card-body">
+                      <ul className="list-unstyled mt-3">
+                        <div className="row">
+                          <div className="col">
+                            <li>Gebruikersnaam: </li>
+                          </div>
+                          <div className="col">
+                            {userData.username}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col">
+                            <li>Wachtwoord: </li>
+                          </div>
+                          <div className="col">
+                            ********
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col">
+                            <UserdataModal user={currentUser} />
+                          </div>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="card mb-4 rounded-3 shadow-sm">
+                    <div className="card-header py-3">
+                      <h4 className="my-0 fw-normal">Statistieken</h4>
+                    </div>
+                    <div className="card-body">
+                      <ul className="list-unstyled mt-3">
+                        <div className="row">
+                          <div className="col">
+                            <li>Wedstrijden: </li>
+                          </div>
+                          <div className="col">
+                            {userStats.GAMES}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col">
+                            <li>Goals: </li>
+                          </div>
+                          <div className="col">
+                            {userStats.GOALS}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col">
+                            <li>Assists: </li>
+                          </div>
+                          <div className="col">
+                            {userStats.ASSISTS}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col">
+                            <li>Streepjes: </li>
+                          </div>
+                          <div className="col">
+                            {formattedTallyString}
+                          </div>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="card mb-4 rounded-3 shadow-sm">
+                    <div className="card-header py-3">
+                      <h4 className="my-0 fw-normal">Kratjes</h4>
+                    </div>
+                    <div className="card-body">
+                      <ul className="list-unstyled mt-3">
+                        <div className="row">
+                          <div className="col">
+                            <li>Openstaand: </li>
+                          </div>
+                          <div className="col">
+                          {userData.punishments.map(p => {
+                            if (!p.satisfied) {
+                              return <i className="fas fa-beer beer-open" key={punishmentKey++} ></i>
+                            }
+                            return ""
+                          })}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col">
+                            <li>Voldaan: </li>
+                          </div>
+                          <div className="col">
+                          {userData.punishments.map(p => {
+                            if (p.satisfied) {
+                              return <i className="fas fa-beer beer-closed" key={punishmentKey++} ></i>
+                            }
+                            return null;
+                          })}
+                          </div>
+                        </div>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="col">
-                <div className="card mb-4 rounded-3 shadow-sm">
-                  <div className="card-header py-3">
-                    <h4 className="my-0 fw-normal">Statistieken</h4>
-                  </div>
-                  <div className="card-body">
-                    <ul className="list-unstyled mt-3">
-                      <li>Goals: {userStats.GOALS}</li>
-                      <li>Assists: {userStats.ASSISTS}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="card mb-4 rounded-3 shadow-sm">
-                  <div className="card-header py-3">
-                    <h4 className="my-0 fw-normal">Team</h4>
-                  </div>
-                  <div className="card-body">
-                    <ul className="list-unstyled mt-3">
-                      <button className="btn btn-outline-primary">{userData.teamName}</button>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </main>
-        ) : (
-          <Redirect to="/"/>
-        )}
-      </div>
-    )
+            </main>
+          ) : (
+            <Redirect to="/" />
+          )}
+        </div>
+      )
+    }
+
   }
 }
 

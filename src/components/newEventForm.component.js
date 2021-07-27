@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Spinner } from "react-bootstrap";
 
 import EventService from "../services/event.service";
 
@@ -168,19 +167,7 @@ class EventForm extends Component {
     }
 
     handleSave(e) {
-        // "momentString": "",
-        // "type": "MATCH",
-        // "opponent": "",
-        // "atHome": true,
-        // "homeGoals": 0,
-        // "awayGoals": 0,
-        // "result": "",
-        // "playerEventDataArrayList": [],
-        // "loading": false,
-        // "errorMsg": "",
-        // "successMsg": ""
-
-        const { momentString, opponent, result, errorMsg, type } = this.state;
+        const { momentString, opponent, result, type } = this.state;
         // Input valideren
         
 
@@ -260,8 +247,8 @@ class EventForm extends Component {
         const { type, loading } = this.state;
         if (loading) {
             return (
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                 </div>
             )
         }
