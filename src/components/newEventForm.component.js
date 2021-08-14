@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import EventService from "../services/event.service";
+import TeamService from "../services/team.service";
 
 import "./newEventForm.component.css";
 
@@ -25,6 +26,7 @@ class EventForm extends Component {
 
 
         this.state = {
+            teamData: this.props.teamData,
             "momentString": "",
             "type": "MATCH",
             "opponent": "",
@@ -41,6 +43,7 @@ class EventForm extends Component {
     }
 
     componentDidMount() {
+        console.log(this.state.teamData)
         let tempList = [];
         this.props.teamData.teamMembers.forEach(p => {
             tempList.push({
@@ -143,10 +146,9 @@ class EventForm extends Component {
     }
 
     onChangeAction(e) {
-        console.log(this.props);
         let violation;
         let actionId = e.target.value;
-        this.props.teamData.actions.forEach(a => {
+        this.state.teamData.actions.forEach(a => {
             if (a.id === actionId) {
                 violation = {
                     "actionId": actionId,
@@ -169,7 +171,7 @@ class EventForm extends Component {
     handleSave(e) {
         const { momentString, opponent, result, type } = this.state;
         // Input valideren
-        
+
 
         this.setState({
             loading: !this.state.loading,
@@ -177,7 +179,7 @@ class EventForm extends Component {
         }, () => {
 
             // Elk type
-            if(momentString === "") {
+            if (momentString === "") {
                 this.setState({
                     errorMsg: "Je hebt geen moment ingevuld",
                     loading: false
@@ -186,15 +188,15 @@ class EventForm extends Component {
             }
 
             // Alleen voor wedstrijd
-            if(type === "MATCH") {
-                if(opponent === "") {
+            if (type === "MATCH") {
+                if (opponent === "") {
                     this.setState({
                         errorMsg: "Je hebt geen tegenstander ingevuld",
                         loading: false
                     });
                     return;
                 }
-                if(result === "") {
+                if (result === "") {
                     this.setState({
                         errorMsg: "Je hebt geen resultaat ingevuld",
                         loading: false
@@ -202,7 +204,7 @@ class EventForm extends Component {
                     return;
                 }
             }
-            
+
             this.saveEvent();
         });
     }
@@ -221,7 +223,7 @@ class EventForm extends Component {
         }
 
         EventService.postEventData(
-            this.props.teamData.id, event).then(
+            this.state.teamData.id, event).then(
                 (res) => {
                     if (res.status === 201) {
                         this.setState({
@@ -243,8 +245,9 @@ class EventForm extends Component {
     }
 
     render() {
-        const { teamData } = this.props;
-        const { type, loading } = this.state;
+        // console.log(this.props)
+        // const { teamData } = this.props;
+        const { teamData, type, loading } = this.state;
         if (loading) {
             return (
                 <div className="spinner-border" role="status">

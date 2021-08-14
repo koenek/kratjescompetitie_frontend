@@ -7,9 +7,7 @@ const user = AuthService.getCurrentUser();
 
 class EventService {
     async postEventData(teamID, event) {
-        console.log(event);
         const json = JSON.stringify(event);
-        console.log(json);
         try {
             return await axios.post(API_URL + teamID, json, {
                 headers: {

@@ -53,31 +53,10 @@ class Login extends Component {
 
     this.form.validateAll();
 
-    //   EventService.postEventData(
-    //     this.props.teamData.id, event).then(
-    //         (res) => {
-    //             if (res.status === 201) {
-    //                 this.setState({
-    //                     successMsg: "Event opgeslagen."
-    //                 })
-    //                 window.location.reload();
-    //             } else {
-    //                 this.setState({
-    //                     loading: false,
-    //                     errorMsg: (res.data.message.length > 0) ? res.data.message : "Opslaan mislukt door onbekende fout. Probeer het nogmaals."
-    //                 });
-    //                 return;
-    //             }
-    //         })
-
-    // this.setState({
-    //     loading: false
-    // });
-
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         () => {
-          this.props.history.push("/dashboard");
+          //this.props.history.push("/dashboard");
           window.location.reload();
         },
         error => {
