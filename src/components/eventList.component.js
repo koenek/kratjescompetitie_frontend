@@ -29,7 +29,7 @@ class EventList extends Component {
                                 <span className="col">Tegenstander</span>
                             </div>
                         </li>
-                        {events.map(e => (
+                        {events && events.map(e => (
                             <button className="list-group-item list-group-item-clickable" key={e.id}>
                                 <div className="row">
                                     <span className="col">{e.type === "MATCH" ? "Wedstrijd" : e.type === "TRAINING" ? "Training" : "Overig"}</span>

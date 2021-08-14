@@ -33,7 +33,6 @@ class TeamPage extends Component {
 
   render() {
     const { teamData, players, isLoading } = this.state;
-    console.log(teamData)
     return (
       <div className="TeamPage mt-5">
         <div className="container">

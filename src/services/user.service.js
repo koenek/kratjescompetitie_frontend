@@ -8,16 +8,16 @@ class UserService {
     let userData = undefined;
     try {
       return await axios
-      .get(API_URL + id, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(response => {
-        if (response.status === 200) {
-          userData = response.data;
-          return userData;
-        }
-      })
-    } catch(err) {
+        .get(API_URL + id, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(response => {
+          if (response.status === 200) {
+            userData = response.data;
+            return userData;
+          }
+        })
+    } catch (err) {
       alert(err);
     }
     return userData;
@@ -26,42 +26,61 @@ class UserService {
   async updateUserData(id, token, newUsername, newPassword) {
     try {
       return await axios
-      .put(API_URL + id, {
-        Authorization: `Bearer ${token}`,
-        username: (newUsername) ? newUsername : null,
-        password: (newPassword) ? newPassword : null
-      }, {
-        headers: { Authorization: `Bearer ${token}` },
-        body   : {
-          "username": (newUsername) ? newUsername : null,
-          "password": (newPassword) ? newPassword : null
-        }
-      })
-      .then(response => {
-        if (response.status === 200) {
-          return response;
-        }
-      })
-    } catch(err) {
+        .put(API_URL + id, {
+          Authorization: `Bearer ${token}`,
+          username: (newUsername) ? newUsername : null,
+          password: (newPassword) ? newPassword : null
+        }, {
+          headers: { Authorization: `Bearer ${token}` },
+          body: {
+            "username": (newUsername) ? newUsername : null,
+            "password": (newPassword) ? newPassword : null
+          }
+        })
+        .then(response => {
+          if (response.status === 200) {
+            return response;
+          }
+        })
+    } catch (err) {
       return err.response;
     }
   }
 
-  getPublicContent() {
-    return axios.get(API_URL + 'all');
+  async getUnregisteredUsers(token) {
+    try {
+      return await axios
+        .get(API_URL + 'unregistered', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(response => {
+          if (response.status === 200) {
+            return response.data;
+          }
+        })
+    } catch (err) {
+      return err.response;
+    }
   }
 
-  getUserBoard() {
-    return axios.get(API_URL + 'user', { headers: authHeader() });
-  }
-
-  getModeratorBoard() {
-    return axios.get(API_URL + 'mod', { headers: authHeader() });
-  }
-
-  getAdminBoard() {
-    return axios.get(API_URL + 'admin', { headers: authHeader() });
+  async togglePunishment(token, userId) {
+    try {
+      return await axios
+        .put(API_URL + `punishment/${userId}`, {
+          Authorization: `Bearer ${token}`
+        }, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+          .then(response => {
+            if (response.status === 200) {
+              return response.data;
+            }
+          })
+    } catch (err) {
+      return err.response;
+    }
   }
 }
+
 
 export default new UserService();

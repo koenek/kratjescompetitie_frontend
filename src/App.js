@@ -41,9 +41,15 @@ class App extends Component {
       this.setState({
         currentUser: user,
         isMod: user.roles.includes("ROLE_MODERATOR"),
-        isAdmin: user.roles.includes("ROLE_ADMIN")
+        isAdmin: user.roles.includes("ROLE_ADMIN"),
+        isLoading: false
       });
       this.getData(user);
+    }
+    else {
+      this.setState({
+        isLoading: false
+      });
     }
   }
 
@@ -59,35 +65,44 @@ class App extends Component {
 
   render() {
     const { currentUser, userData, isMod, isAdmin, isLoading } = this.state;
-    return (
-      <div className="App">
 
-        <Navbar
-          user={currentUser}
-          isAdmin={isAdmin}
-          isMod={isMod}
-        />
+    if (isLoading) {
+      return (
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      )
+    } else {
+      return (
+        <div className="App">
 
-
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/">
-            <Redirect to="/login" />
-          </Route>
-          <Route exact path="/dashboard" render={() => (isLoading) ? <Spinner /> : <Dashboard />} /*component={Dashboard}*/ />
-          <Route exact path="/team" render={() => (isLoading) ? <Spinner /> : (userData.teamId !== "Unregistered") ? <TeamPage teamId={userData.teamId} /> : <Dashboard />} />
-          <Route exact path="/beheer" render={() => (isLoading) ? <Spinner /> : (isMod || isAdmin) ? <ManagementBoard user={currentUser} teamId={userData.teamId} /> : <Dashboard />} />
-          <Route exact path="/profile" component={Profile} />
-          <Route path="/user" component={BoardUser} />
-          <Route path="/mod" component={BoardModerator} />
-          <Route path="/admin" component={BoardAdmin} />
-        </Switch>
+          <Navbar
+            user={currentUser}
+            isAdmin={isAdmin}
+            isMod={isMod}
+          />
 
 
-        <Footer />
-      </div>
-    );
+          <Switch>
+            <Route exact path="/login" render={() => (isLoading) ? <Spinner /> : (currentUser) ? <Redirect to="/dashboard" /> : <Login />} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/">
+              <Redirect to="/login" />
+            </Route>
+            <Route exact path="/dashboard" render={() => (isLoading) ? <Spinner /> : (!currentUser) ? <Redirect to="/login" /> : <Dashboard />} />
+            <Route exact path="/team" render={() => (isLoading) ? <Spinner /> : (userData && userData.teamId !== "Unregistered") ? <TeamPage teamId={userData && userData.teamId} /> : <Dashboard />} />
+            <Route exact path="/beheer" render={() => (isLoading) ? <Spinner /> : (isMod || isAdmin) ? <ManagementBoard user={currentUser} teamId={userData && userData.teamId} /> : <Dashboard />} />
+            <Route exact path="/profile" component={Profile} />
+            <Route path="/user" component={BoardUser} />
+            <Route path="/mod" component={BoardModerator} />
+            <Route path="/admin" component={BoardAdmin} />
+          </Switch>
+
+
+          <Footer />
+        </div>
+      );
+    }
   }
 }
 

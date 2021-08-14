@@ -47,6 +47,14 @@ class UserDataModal extends Component {
             return;
         }
 
+        if (newPassword.length !== 0 && newPassword.length < 8) {
+            this.setState({
+                loading: false,
+                errorMsg: "Wachtwoord mag niet korten zijn dan 8 karakters"
+            });
+            return;
+        }
+
         UserService.updateUserData(
             user.id
             , user.accessToken
