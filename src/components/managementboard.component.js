@@ -10,7 +10,7 @@ import EventModal from "./newEventModal.component";
 import NewPlayerModal from "./newPlayerModal.component";
 import ConnectModal from "./connectPlayerToTeamModal.component";
 
-import { Spinner } from "react-bootstrap";
+import Loading from "./loading.component";
 import PunishmentModal from "./playerPunishmentModal.component";
 
 class ManagementBoard extends Component {
@@ -31,7 +31,7 @@ class ManagementBoard extends Component {
         const that = this;
         const user = AuthService.getCurrentUser();
         let userData, teamData;
-        UserService.getUserData(user.id,user.accessToken).then(response => {
+        UserService.getUserData(user.id, user.accessToken).then(response => {
             userData = response;
             TeamService.getTeamData(userData.teamId, user.accessToken).then(function (result) {
                 that.setState(st => ({
@@ -41,7 +41,7 @@ class ManagementBoard extends Component {
                 }));
             });
         });
-               
+
         // TeamService.getTeamData(this.props.teamId, this.state.currentUser.accessToken).then(function (result) {
         //     that.setState(st => ({
         //         teamData: result,
@@ -52,11 +52,11 @@ class ManagementBoard extends Component {
     }
 
     componentDidUpdate() {
-        if(this.state.players === undefined) {
+        if (this.state.players === undefined) {
             const that = this;
             const user = AuthService.getCurrentUser();
             let userData, teamData;
-            UserService.getUserData(user.id,user.accessToken).then(response => {
+            UserService.getUserData(user.id, user.accessToken).then(response => {
                 userData = response;
                 TeamService.getTeamData(userData.teamId, user.accessToken).then(function (result) {
                     that.setState(st => ({
@@ -66,13 +66,17 @@ class ManagementBoard extends Component {
                     }));
                 });
             });
-        }     
+        }
     }
 
     render() {
         const { teamData, isLoading, currentUser } = this.state;
         if (isLoading) {
-            return <Spinner className="mega" />
+            return (
+                <div className="ManagementBoard mt-5">
+                    <Loading type="light" />
+                </div>
+            )
         } else {
             return (
                 <div className="ManagementBoard mt-5">
@@ -109,7 +113,7 @@ class ManagementBoard extends Component {
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <NewPlayerModal />
-                                        <ConnectModal teamData={teamData} currentUser={currentUser}/>
+                                        <ConnectModal teamData={teamData} currentUser={currentUser} />
                                         <PunishmentModal players={teamData.teamMembers} currentUser={currentUser} />
                                     </div>
                                     <div className="col-sm-9">

@@ -80,16 +80,17 @@ class App extends Component {
             user={currentUser}
             isAdmin={isAdmin}
             isMod={isMod}
+            userData={userData}
           />
 
 
           <Switch>
-            <Route exact path="/login" render={() => (isLoading) ? <Spinner /> : (currentUser) ? <Redirect to="/dashboard" /> : <Login />} />
+            <Route exact path="/login" render={() => (isLoading) ? <Spinner /> : (userData) ? <Redirect to="/dashboard" /> : <Login />} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/">
               <Redirect to="/login" />
             </Route>
-            <Route exact path="/dashboard" render={() => (isLoading) ? <Spinner /> : (!currentUser) ? <Redirect to="/login" /> : <Dashboard />} />
+            <Route exact path="/dashboard" render={() => (isLoading) ? <Spinner /> : (!userData) ? <Redirect to="/login" /> : <Dashboard />} />
             <Route exact path="/team" render={() => (isLoading) ? <Spinner /> : (userData && userData.teamId !== "Unregistered") ? <TeamPage teamId={userData && userData.teamId} /> : <Dashboard />} />
             <Route exact path="/beheer" render={() => (isLoading) ? <Spinner /> : (isMod || isAdmin) ? <ManagementBoard user={currentUser} teamId={userData && userData.teamId} /> : <Dashboard />} />
             <Route exact path="/profile" component={Profile} />

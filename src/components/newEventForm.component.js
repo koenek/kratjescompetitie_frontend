@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import EventService from "../services/event.service";
 import TeamService from "../services/team.service";
 
+import Loading from "./loading.component";
+
 import "./newEventForm.component.css";
 
 class EventForm extends Component {
@@ -172,9 +174,8 @@ class EventForm extends Component {
         const { momentString, opponent, result, type } = this.state;
         // Input valideren
 
-
         this.setState({
-            loading: !this.state.loading,
+            loading: true,
             errorMsg: ""
         }, () => {
 
@@ -239,20 +240,13 @@ class EventForm extends Component {
                     }
                 })
 
-        this.setState({
-            loading: false
-        });
     }
 
     render() {
-        // console.log(this.props)
-        // const { teamData } = this.props;
         const { teamData, type, loading } = this.state;
         if (loading) {
             return (
-                <div className="spinner-border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
+                <Loading />
             )
         }
         else {

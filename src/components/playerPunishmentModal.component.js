@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import UserService from "../services/user.service";
 
+import Loading from "./loading.component";
+
 class PunishmentModal extends Component {
     constructor(props) {
         super(props);
@@ -24,45 +26,50 @@ class PunishmentModal extends Component {
     handleCheckOff() {
         const { selectedPlayerId } = this.state;
         const { currentUser } = this.props;
-        if (selectedPlayerId.length === 0 || selectedPlayerId === "Kies een speler..") {
-            this.setState({
-                errorMsg: "Je hebt geen speler geselecteerd",
-                loading: false
-            });
-            return;
-        }
 
-        UserService.togglePunishment(currentUser.accessToken,selectedPlayerId)
-        .then(response => {
-
-            if(response.id) {
+        this.setState({
+            loading: true
+        }, () => {
+            if (selectedPlayerId.length === 0 || selectedPlayerId === "Kies een speler..") {
                 this.setState({
-                    successMsg: `Kratje afgevinkt`,
+                    errorMsg: "Je hebt geen speler geselecteerd",
                     loading: false
                 });
-                window.location.reload();
                 return;
             }
 
-            if (response.status !== 200) {
-                if (response.status === 401) {
-                    this.setState({
-                        errorMsg: `${response.status}: Niet geautoriseerd`,
-                        loading: false
-                    });
-                } else if (response.status === 404) {
-                    this.setState({
-                        errorMsg: `Speler heeft geen kratje om af te vinken`,
-                        loading: false
-                    });
-                } else {
-                    this.setState({
-                        errorMsg: `${response.status}: ${response.message}`,
-                        loading: false
-                    });
-                }
-                return;
-            }
+            UserService.togglePunishment(currentUser.accessToken, selectedPlayerId)
+                .then(response => {
+
+                    if (response.id) {
+                        this.setState({
+                            successMsg: `Kratje afgevinkt`,
+                            loading: false
+                        });
+                        window.location.reload();
+                        return;
+                    }
+
+                    if (response.status !== 200) {
+                        if (response.status === 401) {
+                            this.setState({
+                                errorMsg: `${response.status}: Niet geautoriseerd`,
+                                loading: false
+                            });
+                        } else if (response.status === 404) {
+                            this.setState({
+                                errorMsg: `Speler heeft geen kratje om af te vinken`,
+                                loading: false
+                            });
+                        } else {
+                            this.setState({
+                                errorMsg: `${response.status}: ${response.message}`,
+                                loading: false
+                            });
+                        }
+                        return;
+                    }
+                });
         });
     }
 
@@ -70,7 +77,7 @@ class PunishmentModal extends Component {
         const { loading } = this.state;
         const { players } = this.props;
         return (
-            <div className="PunishmentModal mb-1">
+            <div className="PunishmentModal mb-4">
                 <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#punishmentModal">
                     Kratje afvinken
                 </button>
@@ -112,9 +119,7 @@ class PunishmentModal extends Component {
                                 )}
                             </div>
                             {loading ? (
-                                <div className="spinner-border text-primary" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </div>
+                                <Loading />
                             ) : (
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>

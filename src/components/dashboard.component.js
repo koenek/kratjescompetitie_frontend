@@ -4,6 +4,7 @@ import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 
 import UserdataModal from "./userdataModal.component";
+import Loading from "./loading.component";
 
 import "./dashboard.component.css";
 
@@ -39,9 +40,9 @@ class Dashboard extends Component {
     const { currentUser, userData, userStats, isLoading } = this.state;
     if (isLoading) {
       return (
-        <div className="spinner-border text-light" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
+        <main className="Dashboard mt-5">
+          <Loading type={"light"} />
+        </main>
       )
     } else {
       // userStats.TALLYCOUNT omzetten in streepjes
@@ -187,12 +188,12 @@ class Dashboard extends Component {
                             <li>Openstaand: </li>
                           </div>
                           <div className="col">
-                          {userData.punishments.map(p => {
-                            if (!p.satisfied) {
-                              return <i className="fas fa-beer beer-open" key={punishmentKey++} ></i>
-                            }
-                            return ""
-                          })}
+                            {userData.punishments.map(p => {
+                              if (!p.satisfied) {
+                                return <i className="fas fa-beer beer-open" key={punishmentKey++} ></i>
+                              }
+                              return ""
+                            })}
                           </div>
                         </div>
                         <div className="row">
@@ -200,12 +201,12 @@ class Dashboard extends Component {
                             <li>Voldaan: </li>
                           </div>
                           <div className="col">
-                          {userData.punishments.map(p => {
-                            if (p.satisfied) {
-                              return <i className="fas fa-beer beer-closed" key={punishmentKey++} ></i>
-                            }
-                            return null;
-                          })}
+                            {userData.punishments.map(p => {
+                              if (p.satisfied) {
+                                return <i className="fas fa-beer beer-closed" key={punishmentKey++} ></i>
+                              }
+                              return null;
+                            })}
                           </div>
                         </div>
                       </ul>

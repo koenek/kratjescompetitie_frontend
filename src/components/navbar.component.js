@@ -13,7 +13,8 @@ class Navbar extends Component {
     }
 
     render() {
-        const { user, isAdmin, isMod } = this.props;
+        const { user, isAdmin, isMod, userData } = this.props;
+        console.log(userData);
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <Link to={"/"} className="navbar-brand">
@@ -23,7 +24,7 @@ class Navbar extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    {user ? (
+                    {userData ? (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
                                 <Link to={"/dashboard"} className="nav-link">
@@ -35,7 +36,7 @@ class Navbar extends Component {
                                     Team
                                 </Link>
                             </li>
-                            { (isAdmin || isMod) &&
+                            {(isAdmin || isMod) &&
                                 <li className="nav-item">
                                     <Link to={"/beheer"} className="nav-link">
                                         Beheer
