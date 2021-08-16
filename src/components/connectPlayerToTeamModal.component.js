@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import UserService from "../services/user.service";
 import TeamService from "../services/team.service";
 
+import Loading from "./loading.component";
+
 class ConnectModal extends Component {
     constructor(props) {
         super(props);
@@ -106,7 +108,7 @@ class ConnectModal extends Component {
         const { loading, players } = this.state;
         const { teamData } = this.props;
         return (
-            <div className="ConnectModal mb-1">
+            <div className="ConnectModal mb-2">
                 <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#connectModal">
                     Speler koppelen
                 </button>
@@ -155,9 +157,7 @@ class ConnectModal extends Component {
                                 )}
                             </div>
                             {loading ? (
-                                <div className="spinner-border text-primary" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </div>
+                                <Loading />
                             ) : (
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>

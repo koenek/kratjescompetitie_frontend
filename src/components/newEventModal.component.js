@@ -15,7 +15,6 @@ class EventModal extends Component {
 
     render() {
         const { teamData } = this.state;
-        console.log(teamData);
         return (
             <div className="EventModal mb-4">
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import AuthService from "../services/auth.service";
 
+import Loading from "./loading.component";
+
 import "./modal.component.css";
 
 class NewPlayerModal extends Component {
@@ -109,17 +111,14 @@ class NewPlayerModal extends Component {
                         window.location.reload();
                     }
                 });
-
         });
-
-
     }
 
 
     render() {
         const { loading } = this.state;
         return (
-            <div className="NewPlayerModal mb-1">
+            <div className="NewPlayerModal mb-2">
                 <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Speler aanmaken
                 </button>
@@ -198,9 +197,7 @@ class NewPlayerModal extends Component {
                                 )}
                             </div>
                             {loading ? (
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                                <Loading />
                             ) : (
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>

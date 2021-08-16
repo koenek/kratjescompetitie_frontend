@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PlayerList from "./playerList.component";
+import Loading from "./loading.component";
 
 import AuthService from "../services/auth.service";
 import TeamService from "../services/team.service";
@@ -37,7 +38,7 @@ class TeamPage extends Component {
       <div className="TeamPage mt-5">
         <div className="container">
           {isLoading ? (
-            <h1>LOADING....</h1>
+            <Loading type={"light"} />
           ) : (
             <PlayerList players={players} teamName={teamData.teamName} />
           )}
