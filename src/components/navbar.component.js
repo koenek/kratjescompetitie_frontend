@@ -13,8 +13,7 @@ class Navbar extends Component {
     }
 
     render() {
-        const { user, isAdmin, isMod, userData } = this.props;
-        console.log(userData);
+        const { isAdmin, isMod, userData } = this.props;
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <Link to={"/"} className="navbar-brand">

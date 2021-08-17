@@ -30,7 +30,7 @@ class ManagementBoard extends Component {
     componentDidMount() {
         const that = this;
         const user = AuthService.getCurrentUser();
-        let userData, teamData;
+        let userData
         UserService.getUserData(user.id, user.accessToken).then(response => {
             userData = response;
             TeamService.getTeamData(userData.teamId, user.accessToken).then(function (result) {
@@ -41,21 +41,13 @@ class ManagementBoard extends Component {
                 }));
             });
         });
-
-        // TeamService.getTeamData(this.props.teamId, this.state.currentUser.accessToken).then(function (result) {
-        //     that.setState(st => ({
-        //         teamData: result,
-        //         players: result.teamMembers,
-        //         isLoading: false
-        //     }));
-        // });
     }
 
     componentDidUpdate() {
         if (this.state.players === undefined) {
             const that = this;
             const user = AuthService.getCurrentUser();
-            let userData, teamData;
+            let userData;
             UserService.getUserData(user.id, user.accessToken).then(response => {
                 userData = response;
                 TeamService.getTeamData(userData.teamId, user.accessToken).then(function (result) {

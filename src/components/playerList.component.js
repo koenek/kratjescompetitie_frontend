@@ -8,7 +8,7 @@ class PlayerList extends Component {
         const { players, teamName } = this.props;
         let punishmentKey = 0;
         return (
-            <div className="PlayerList">
+            <div className="PlayerList mb-3">
                 <div className="p-2 mb-4 bg-light rounded-3 PlayerList-header-container">
                     <div className="container-fluid">
                         <div className="row">

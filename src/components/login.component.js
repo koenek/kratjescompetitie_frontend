@@ -60,7 +60,6 @@ class Login extends Component {
           window.location.reload();
         },
         error => {
-          console.log(error.Error);
           let resMessage = "";
           if (error.response === undefined) {
             resMessage = "Kan geen contact maken met de server.\nEr is misschien iets mis met je internetverbinding. Probeer het nogmaals.\nNeem contact op met de eigenaar van deze website als dit probleem zich blijft voordoen.";

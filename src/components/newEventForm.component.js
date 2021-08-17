@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import EventService from "../services/event.service";
-import TeamService from "../services/team.service";
 
 import Loading from "./loading.component";
 
@@ -45,7 +44,6 @@ class EventForm extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state.teamData)
         let tempList = [];
         this.props.teamData.teamMembers.forEach(p => {
             tempList.push({
@@ -116,9 +114,12 @@ class EventForm extends Component {
 
     onChangeAanwezig(e) {
         // Zoek de huidige index
-        const index = this.state.playerEventDataArrayList.findIndex((element) => element.playerID === e.target.id);
+        let targetId = e.target.id.substring(2,e.target.length); // haal c_, g_ en a_ van string af
+        const index = this.state.playerEventDataArrayList.findIndex((element) => element.playerID === targetId);
         // Maak kopie van array
         let playerEventDataArrayList = [...this.state.playerEventDataArrayList];
+        console.log(playerEventDataArrayList);
+        console.log(index);
         // Zet de aangepaste waarde in de kopie
         playerEventDataArrayList[index].played = e.target.checked;
         // Neem aangepaste array op in setState
@@ -333,17 +334,17 @@ class EventForm extends Component {
                                                                 <span className="col PlayerEventData-text">{p.firstname}</span>
                                                                 <span className="col">
                                                                     <div className="form-check form-switch PlayerEventData-checkbox">
-                                                                        <input className="form-check-input" type="checkbox" id={p.id} onChange={this.onChangeAanwezig} />
+                                                                        <input className="form-check-input" type="checkbox" id={`c_${p.id}`} onChange={this.onChangeAanwezig} />
                                                                     </div>
                                                                 </span>
                                                                 <span className="col">
                                                                     <div className="input-group PlayerEventData-number">
-                                                                        <input type="number" className="form-control" placeholder="0" aria-label="goals" aria-describedby="goals" min="0" id={p.id} onChange={this.onChangeGoals} />
+                                                                        <input type="number" className="form-control" placeholder="0" aria-label="goals" aria-describedby="goals" min="0" id={`g_${p.id}`} onChange={this.onChangeGoals} />
                                                                     </div>
                                                                 </span>
                                                                 <span className="col">
                                                                     <div className="input-group PlayerEventData-number">
-                                                                        <input type="number" className="form-control" placeholder="0" aria-label="assists" aria-describedby="assists" min="0" id={p.id} onChange={this.onChangeAssists} />
+                                                                        <input type="number" className="form-control" placeholder="0" aria-label="assists" aria-describedby="assists" min="0" id={`a_${p.id}`} onChange={this.onChangeAssists} />
                                                                     </div>
                                                                 </span>
                                                                 <span className="col">

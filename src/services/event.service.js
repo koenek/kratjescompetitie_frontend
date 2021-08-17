@@ -19,7 +19,6 @@ class EventService {
             return response;
             });
         } catch (err) {
-            console.log(err.response);
             return err.response;
         }
     }
