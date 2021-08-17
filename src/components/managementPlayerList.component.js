@@ -5,7 +5,7 @@ class ManagementPlayerList extends Component {
         const { players } = this.props;
         let punishmentKey = 0;
         return (
-            <div className="ManagementPlayerList">
+            <div className="ManagementPlayerList mb-3">
                 {/* <ul className="list-group">
                     <li className="list-group-item list-group-item-info">
                         <div className="row">

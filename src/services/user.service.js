@@ -1,5 +1,4 @@
 import axios from 'axios';
-import authHeader from './auth-header';
 
 const API_URL = 'http://localhost:8080/api/user-management/users/';
 
@@ -29,12 +28,12 @@ class UserService {
         .put(API_URL + id, {
           Authorization: `Bearer ${token}`,
           username: (newUsername) ? newUsername : null,
-          password: (newPassword) ? newPassword : null
+          newPassword: (newPassword) ? newPassword : null
         }, {
           headers: { Authorization: `Bearer ${token}` },
           body: {
-            "username": (newUsername) ? newUsername : null,
-            "password": (newPassword) ? newPassword : null
+            username: (newUsername) ? newUsername : null,
+            newPassword: (newPassword) ? newPassword : null
           }
         })
         .then(response => {

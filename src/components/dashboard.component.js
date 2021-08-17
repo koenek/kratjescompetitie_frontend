@@ -12,10 +12,8 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
 
-    const user = AuthService.getCurrentUser();
-
     this.state = {
-      currentUser: user,
+      currentUser: "",
       userData: "",
       userStats: "",
       isLoading: true,
@@ -24,16 +22,21 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    if (this.state.currentUser) {
-      const that = this;
-      UserService.getUserData(this.state.currentUser.id, this.state.currentUser.accessToken).then(function (result) {
-        that.setState(st => ({
-          userData: result,
-          userStats: result.statistics.statistics,
-          isLoading: false
-        }));
-      });
-    }
+    const user = AuthService.getCurrentUser();
+    this.setState({
+      currentUser: user
+    }, () => {
+      if (this.state.currentUser) {
+        const that = this;
+        UserService.getUserData(this.state.currentUser.id, this.state.currentUser.accessToken).then(function (result) {
+          that.setState(st => ({
+            userData: result, 
+            userStats: result.statistics.statistics,
+            isLoading: false
+          }));
+        });
+      }
+    });
   }
 
   render() {
@@ -51,19 +54,7 @@ class Dashboard extends Component {
         formattedTallyString += "|";
       }
 
-      let punishmentCount = 0;
-      let punishmentFulfilled = 0;
-      let punishmentUnfulfilled = 0;
       let punishmentKey = 0;
-      punishmentCount = userData.punishments.length;
-      userData.punishments.forEach(p => {
-        if (p.satisfied) {
-          punishmentFulfilled++;
-        } else if (!p.satisfied) {
-          punishmentUnfulfilled++;
-        }
-      })
-      console.log(`Count: ${punishmentCount}\nFul: ${punishmentFulfilled}\nUnful: ${punishmentUnfulfilled}`)
 
       return (
         <div className="container py-3">
@@ -71,7 +62,7 @@ class Dashboard extends Component {
             <main className="Dashboard">
               <div className="row">
                 <h1 className="Dashboard-welcome mt-5 mb-5">
-                  Welkom {userData.username}
+                  Welkom {userData.firstname}
                 </h1>
               </div>
               {/* <div className="row row-cols-1 row-cols-md-12 mt-3 mb-3 mr-1 ml-1 text-center">

@@ -19,7 +19,6 @@ class TeamService {
     } catch (err) {
       return err.response;
     }
-    return null;
   }
 
   async connectPlayerToTeam(token, teamId, playerId) {

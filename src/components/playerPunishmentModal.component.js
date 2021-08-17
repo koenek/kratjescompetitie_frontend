@@ -98,6 +98,8 @@ class PunishmentModal extends Component {
                                             {players && players.map(p => {
                                                 if (p.punishments.length > 0) {
                                                     return <option value={p.id} key={p.id}>{p.username}</option>
+                                                } else {
+                                                    return "";
                                                 }
                                             })}
                                         </select>

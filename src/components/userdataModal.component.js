@@ -62,7 +62,6 @@ class UserDataModal extends Component {
                 , newUsername
                 , newPassword).then(
                     (res) => {
-                        console.log(res);
                         if (res.status === 200) {
                             AuthService.logout();
                             window.location.reload();

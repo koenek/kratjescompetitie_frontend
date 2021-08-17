@@ -126,8 +126,8 @@ class ConnectModal extends Component {
                                     <div className="input-group mb-3">
                                         <select className="custom-select" id="players" onChange={this.onChangePlayer}>
                                         <option defaultValue>Kies een speler..</option>
-                                            {players.map(p => {
-                                                return <option value={p.id} key={p.id}>{p.username}</option>
+                                            {players && players.map(p => {
+                                                return <option value={p.id} key={p.id}>{p.firstname}</option>
                                             })}
                                         </select>
                                     </div>
