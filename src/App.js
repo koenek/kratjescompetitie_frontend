@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -10,12 +10,8 @@ import Navbar from "./components/navbar.component";
 import Footer from "./components/footer.component";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
-import Profile from "./components/profile.component";
 import Dashboard from "./components/dashboard.component";
 import ManagementBoard from "./components/managementboard.component";
-import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
-import BoardAdmin from "./components/board-admin.component";
 import TeamPage from "./components/team.component";
 import { Spinner } from "react-bootstrap";
 
@@ -81,23 +77,17 @@ class App extends Component {
             isAdmin={isAdmin}
             isMod={isMod}
             userData={userData}
+            history={this.props.history}
           />
 
-
-          <Switch>
-            <Route exact path="/login" render={() => (isLoading) ? <Spinner /> : (userData) ? <Redirect to="/dashboard" /> : <Login />} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/">
-              <Redirect to="/login" />
-            </Route>
-            <Route exact path="/dashboard" render={() => (isLoading) ? <Spinner /> : (!userData) ? <Redirect to="/login" /> : <Dashboard />} />
-            <Route exact path="/team" render={() => (isLoading) ? <Spinner /> : (userData && userData.teamId !== "Unregistered") ? <TeamPage teamId={userData && userData.teamId} /> : <Dashboard />} />
-            <Route exact path="/beheer" render={() => (isLoading) ? <Spinner /> : (isMod || isAdmin) ? <ManagementBoard user={currentUser} teamId={userData && userData.teamId} /> : <Dashboard />} />
-            <Route exact path="/profile" component={Profile} />
-            <Route path="/user" component={BoardUser} />
-            <Route path="/mod" component={BoardModerator} />
-            <Route path="/admin" component={BoardAdmin} />
-          </Switch>
+            <Switch>
+              <Route exact path="/login" render={routeProps => (isLoading) ? <Spinner /> : (userData) ? <Redirect to="/dashboard" /> : <Login {...routeProps} />} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/" render={() => (userData) ? <Dashboard /> : <Login />} />
+              <Route exact path="/dashboard" render={() => (isLoading) ? <Spinner /> : (!userData) ? <Redirect to="/login" /> : <Dashboard />} />
+              <Route exact path="/team" render={() => (isLoading) ? <Spinner /> : (userData && userData.teamId !== "Unregistered") ? <TeamPage teamId={userData && userData.teamId} /> : <Dashboard />} />
+              <Route exact path="/beheer" render={() => (isLoading) ? <Spinner /> : (isMod || isAdmin) ? <ManagementBoard user={currentUser} teamId={userData && userData.teamId} /> : <Dashboard />} />
+            </Switch>
 
 
           <Footer />
