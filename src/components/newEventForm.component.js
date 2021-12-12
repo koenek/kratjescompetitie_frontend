@@ -118,8 +118,6 @@ class EventForm extends Component {
         const index = this.state.playerEventDataArrayList.findIndex((element) => element.playerID === targetId);
         // Maak kopie van array
         let playerEventDataArrayList = [...this.state.playerEventDataArrayList];
-        console.log(playerEventDataArrayList);
-        console.log(index);
         // Zet de aangepaste waarde in de kopie
         playerEventDataArrayList[index].played = e.target.checked;
         // Neem aangepaste array op in setState
@@ -128,7 +126,8 @@ class EventForm extends Component {
 
     onChangeGoals(e) {
         // Zoek de huidige index
-        const index = this.state.playerEventDataArrayList.findIndex((element) => element.playerID === e.target.id);
+        let targetId = e.target.id.substring(2,e.target.length); // haal c_, g_ en a_ van string af
+        const index = this.state.playerEventDataArrayList.findIndex((element) => element.playerID === targetId);
         // Maak kopie van array
         let playerEventDataArrayList = [...this.state.playerEventDataArrayList];
         // Zet de aangepaste waarde in de kopie
@@ -139,7 +138,8 @@ class EventForm extends Component {
 
     onChangeAssists(e) {
         // Zoek de huidige index
-        const index = this.state.playerEventDataArrayList.findIndex((element) => element.playerID === e.target.id);
+        let targetId = e.target.id.substring(2,e.target.length); // haal c_, g_ en a_ van string af
+        const index = this.state.playerEventDataArrayList.findIndex((element) => element.playerID === targetId);
         // Maak kopie van array
         let playerEventDataArrayList = [...this.state.playerEventDataArrayList];
         // Zet de aangepaste waarde in de kopie

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/team-management/teams/';
+// const API_URL = 'http://localhost:8080/api/team-management/teams/';
+const API_URL = `${process.env.REACT_APP_API_URI}/api/team-management/teams/`;
 
 class TeamService {
   async getTeamData(id, token) {
